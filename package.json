@@ -1,0 +1,38 @@
+{
+  "name": "hubman_demo",
+  "version": "1.0.0",
+  "description": "Simple MVC using NodeJS, Express, Sequelize and mySQL, with ejs template engine",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/virtualkur2/hubman_demo.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "sequelize",
+    "ejs",
+    "mysql",
+    "mvc"
+  ],
+  "author": "Mauricio Contreras",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/virtualkur2/hubman_demo/issues"
+  },
+  "homepage": "https://github.com/virtualkur2/hubman_demo#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.7.0"
+  }
+}
