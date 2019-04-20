@@ -14,6 +14,9 @@ const db = {
   },
   close: () => {
     return sequelize.close();
+  },
+  sequelize: () => {
+    return sequelize;
   }
 }
 
