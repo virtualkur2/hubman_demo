@@ -20,9 +20,7 @@ const db = {
     return sequelize.sync();
   },
   models: {
-    User: () => {
-      return UserModel(sequelize, Sequelize);
-    }
+    User: UserModel(sequelize, Sequelize)
   }
 }
 

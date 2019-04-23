@@ -1,4 +1,4 @@
-const User = require('../helpers/db.helper').models.User();
+const User = require('../helpers/db.helper').models.User;
 
 const create = (req, res, next) => {
   if (!req.body) {
@@ -14,7 +14,9 @@ const create = (req, res, next) => {
       'id',
       'firstName',
       'lastName',
-      'email'
+      'email',
+      'createdAt',
+      'updatedAt'
     ],
     defaults: req.body
   })
