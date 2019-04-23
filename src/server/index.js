@@ -2,6 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const path = require('path');
+const routes = require('./routes/');
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ const server = () => {
   });
   app.set('views', path.join(__dirname, 'views'));
   app.set('view engine', 'ejs');
+  app.use(routes(router));
   return app;
 }
 

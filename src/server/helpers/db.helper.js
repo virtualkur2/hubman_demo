@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const config = require('../../config');
+const UserModel = require('../models/user.model');
 
 const sequelize = new Sequelize(
   config.MYSQL.database,
@@ -15,8 +16,13 @@ const db = {
   close: () => {
     return sequelize.close();
   },
-  sequelize: () => {
-    return sequelize;
+  sync: () => {
+    return sequelize.sync();
+  },
+  models: {
+    User: () => {
+      return UserModel(sequelize, Sequelize);
+    }
   }
 }
 

@@ -1,28 +1,79 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../helpers/db.helper').sequelize;
+const bcrypt = require('bcrypt');
+const config = require('../../config');
 
-const Model = Sequelize.Model;
-
-class User extends Model {}
-
-User.init({
-  firstName: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
-  lastName: {
-    type: Sequelize.STRING,
-  },
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: true
-    }
-  },
-  hashed_password: {
-    type: Sequelize.STRING,
-    allowNull: false
+const hashPassword = async (password) => {
+  if(!password) {
+    throw new Error('No password supplied');
   }
-}, { sequelize, modelName: 'user'});
+  try {
+    return await bcrypt.hash(password, config.saltingRounds);
+  }
+  catch(error) {
+    throw error;
+  }
+}
+
+const User = (sequelize, DataTypes) => {
+  const model = sequelize.define('user', {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      isEmail: true
+    },
+    hashed_password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.VIRTUAL,
+      allowNull: false,
+      set: function(val) {
+        this.setDataValue('password', val);
+      },
+      get: function() {
+        return this.getDataValue('password');
+      },
+      validate: {
+        isLongEnough: function(val) {
+          if(val.length < config.passwordLength) {
+            throw new Error(`Password must be at least ${config.passwordLength} characters long.`);
+          }
+        }
+      }
+    }
+  });
+
+  model.prototype.authenticate = async (password) => {
+    try {
+      return await bcrypt.compare(password, this.getDataValue('hashed_password'));
+    }
+    catch(error) {
+      throw error;
+    }
+  }
+
+  model.addHook('beforeValidate', (user, options) => {
+    return hashPassword(user.password).then((hash) => {
+      user.hashed_password = hash;
+    });
+  });
+
+
+  return model;
+}
+
+module.exports = User;

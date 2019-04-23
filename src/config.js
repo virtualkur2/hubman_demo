@@ -10,7 +10,9 @@ const config = {
       dialect: 'mysql',
       logging: false,
     }
-  }
+  },
+  saltingRounds: 12,
+  passwordLength: 6
 }
 
 module.exports = config;

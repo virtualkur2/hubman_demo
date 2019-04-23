@@ -4,10 +4,10 @@ const config = require('./config');
 
 const app = server();
 console.info('Iniciando aplicación...');
-console.info('===> Conectando a base de datos...')
-db.connect()
+console.info('*** Conectando a base de datos...')
+db.sync()
   .then(() => {
-    console.info('===> ... conexión establecida.')
+    console.info('*** ... conexión establecida.');
     console.info('===> Iniciando servidor...');
     app.listen(config.PORT, (err) => {
       if(err) {
@@ -19,8 +19,8 @@ db.connect()
     });
   })
   .catch((err) => {
-    console.error('===> ... no se pudo establecer conexión.')
+    console.error('*** ... no se pudo establecer conexión.')
     console.error(err.message);
-    console.info('===> Saliendo de aplicación...')
+    console.info('Saliendo de aplicación...')
     process.exit(1);
   });
