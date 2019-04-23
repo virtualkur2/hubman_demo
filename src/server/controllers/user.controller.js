@@ -20,6 +20,8 @@ const create = (req, res, next) => {
   })
     .then(([user, created]) => {
       if(created) {
+        user.hashed_password = undefined;
+        user.password = undefined;
         return res.status(200).json(user);
       }
       return res.status(400).json({
