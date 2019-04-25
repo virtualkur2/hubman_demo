@@ -62,4 +62,4 @@ const userById = (req, res, next, id) => {
     });
 }
 
-module.exports = { create }
+module.exports = { create, read, userById }

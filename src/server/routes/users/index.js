@@ -12,7 +12,7 @@ const users = (router) => {
     .post(usrCtrl.create);
 
   router.route('/api/users/:userId')
-    .get(authCtrl.requireSignIn, auhtCtrl.hasAuthorization, usrCtrl.read)
+    .get(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.read)
   //   .put(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.update)
   //   .delete(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.remove);
   //
