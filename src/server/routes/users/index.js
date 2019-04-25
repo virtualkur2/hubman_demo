@@ -11,12 +11,12 @@ const users = (router) => {
   router.route('/api/users/signup')
     .post(usrCtrl.create);
 
-  // router.route('/api/users/:userId')
-  //   .get(authCtrl.requireSignIn, auhtCtrl.hasAuthorization, usrCtrl.read)
+  router.route('/api/users/:userId')
+    .get(authCtrl.requireSignIn, auhtCtrl.hasAuthorization, usrCtrl.read)
   //   .put(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.update)
   //   .delete(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.remove);
   //
-  // router.param('userId', usrCtrl.userById);
+  router.param('userId', usrCtrl.userById);
 
   return router;
 }
