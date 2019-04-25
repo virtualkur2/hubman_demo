@@ -41,11 +41,11 @@ const User = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.VIRTUAL,
       allowNull: false,
-      set: function(val) {
-        this.setDataValue('password', val);
-      },
       get: function() {
         return this.getDataValue('password');
+      },
+      set: function(val) {
+        this.setDataValue('password', val);
       },
       validate: {
         isLongEnough: function(val) {
@@ -53,11 +53,11 @@ const User = (sequelize, DataTypes) => {
             throw new Error(`Password must be at least ${config.passwordLength} characters long.`);
           }
         }
-      }
+      },
     }
   });
 
-  model.prototype.authenticate = async (password) => {
+  model.prototype.authenticate = async function(password) {
     try {
       return await bcrypt.compare(password, this.getDataValue('hashed_password'));
     }
