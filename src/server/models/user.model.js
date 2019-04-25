@@ -6,7 +6,7 @@ const hashPassword = async (password) => {
     throw new Error('No password supplied');
   }
   try {
-    return await bcrypt.hash(password, config.saltingRounds);
+    return await bcrypt.hash(password, config.token.saltingRounds);
   }
   catch(error) {
     throw error;
