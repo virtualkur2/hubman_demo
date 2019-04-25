@@ -38,4 +38,10 @@ const create = (req, res, next) => {
     });
 }
 
+const read = (req, res, next) => {
+  req.profile.hashed_password = undefined;
+  req.profile.password = undefined;
+  return res.status(200).json(req.profile);
+}
+
 module.exports = { create }
