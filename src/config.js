@@ -13,8 +13,8 @@ const config = {
   },
   passwordLength: 6,
   token: {
-    expireTime: process.env.TOKEN.EXPIRE_TIME || 60*60*24, // 24 hours
-    secret: process.env.TOKEN.JWT_SECRET || '10E57825F89949BD99BF7714C02064C8431A28E322A17CC15E3B07C791AFFE78', // taken from https://www.grc.com/passwords.htm
+    expireTime: process.env.TOKEN_EXPIRE_TIME || 60*60*24, // 24 hours
+    secret: process.env.TOKEN_JWT_SECRET || '10E57825F89949BD99BF7714C02064C8431A28E322A17CC15E3B07C791AFFE78', // taken from https://www.grc.com/passwords.htm
     saltingRounds: 12,
   }
 }
