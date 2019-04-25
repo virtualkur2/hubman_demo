@@ -12,9 +12,9 @@ const users = (router) => {
     .post(usrCtrl.create);
 
   // router.route('/api/users/:userId')
-  //   .get(authCtrl.requireSignIn, usrCtrl.hasAuthorization, usrCtrl.read)
-  //   .put(authCtrl.requireSignIn, usrCtrl.hasAuthorization, usrCtrl.update)
-  //   .delete(authCtrl.requireSignIn, usrCtrl.hasAuthorization, usrCtrl.remove);
+  //   .get(authCtrl.requireSignIn, auhtCtrl.hasAuthorization, usrCtrl.read)
+  //   .put(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.update)
+  //   .delete(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.remove);
   //
   // router.param('userId', usrCtrl.userById);
 

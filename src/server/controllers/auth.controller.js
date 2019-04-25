@@ -20,7 +20,7 @@ const signin = (req, res, next) => {
         }
         user.hashed_password = undefined;
         user.password = undefined;
-        const token = jwt.sign({id: user.id, exp: config.token.expireTime}, config.token.secret);
+        const token = jwt.sign({id: user.id, exp: Math.floor(Date.now() / 1000) + config.token.expireTime}, config.token.secret);
         return res.status(200).json({
           token: token,
           user: user
@@ -40,16 +40,46 @@ const signin = (req, res, next) => {
     });
 }
 
-const signout = (req, res, next) => {
-
+const requireSignIn = (req, res, next) => {
+  const token = getToken(req);
+  if(!token) {
+    return res.status(400).json({
+      error: 'Missing credentials, please login'
+    });
+  }
+  jwt.verify(token, config.token.secret, (err, decoded) => {
+    if(err) {
+      console.log(err.message);
+      return res.status(500).json({
+        error: err.message
+      });
+    }
+    req.auth = decoded;
+    console.log(decoded);
+    next();
+  });
 }
 
-const requireSignIn = (req, res, next) => {
-
+const hasAuthorization = (req, res, next) => {
+  const authorized = req.profile && req.auth && (req.profile.id == req.auth.id);
+  if(!authorized) {
+    return res.status(400).json({
+      error: 'User is not authorized'
+    });
+  }
+  next();
 }
 
 const getToken = (req) => {
-
+  let token = undefined;
+  if(req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+    token = req.headers.authorization.split(' ')[1];
+  } else {
+    if(req.query && req.query.token) {
+      token = req.query.token;
+    }
+  }
+  return token;
 }
 
-module.exports = { signin }
+module.exports = { signin, requireSignIn, hasAuthorization }
