@@ -1,12 +1,12 @@
 const usrCtrl = require('../../controllers/user.controller');
-//const authCtrl = require('../../controllers/auth.controller');
+const authCtrl = require('../../controllers/auth.controller');
 
 const users = (router) => {
   // router.route('/api/users/list')
   //   .get(authCtrl.requireSignIn, authCtrl.hasAdminRol, usrCtrl.list);
 
-  // router.route('/api/users/signin')
-  //   .post(authCtrl.signin);
+  router.route('/api/users/signin')
+    .post(authCtrl.signin);
 
   router.route('/api/users/signup')
     .post(usrCtrl.create);
