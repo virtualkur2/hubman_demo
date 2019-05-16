@@ -21,6 +21,9 @@ const db = {
   },
   models: {
     User: UserModel(sequelize, Sequelize)
+  },
+  Op: () => {
+    return Sequelize.Op;
   }
 }
 
