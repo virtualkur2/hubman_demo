@@ -44,6 +44,10 @@ const read = (req, res, next) => {
   return res.status(200).json(req.profile);
 }
 
+const update = (req, res, next) => {
+  
+}
+
 const userById = (req, res, next, id) => {
   User.findByPk(id)
     .then((user) => {
