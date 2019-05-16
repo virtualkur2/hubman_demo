@@ -1,18 +1,6 @@
 const bcrypt = require('bcrypt');
 const config = require('../../config');
 
-const hashPassword = async (password) => {
-  if(!password) {
-    throw new Error('No password supplied');
-  }
-  try {
-    return await bcrypt.hash(password, config.token.saltingRounds);
-  }
-  catch(error) {
-    throw error;
-  }
-}
-
 const User = (sequelize, DataTypes) => {
   const model = sequelize.define('user', {
     id: {
@@ -36,7 +24,8 @@ const User = (sequelize, DataTypes) => {
     },
     hashed_password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     password: {
       type: DataTypes.VIRTUAL,
@@ -66,12 +55,27 @@ const User = (sequelize, DataTypes) => {
     }
   }
 
-  model.addHook('beforeValidate', (user, options) => {
-    return hashPassword(user.password).then((hash) => {
-      user.hashed_password = hash;
-    });
+  model.prototype.hashPassword = async function(password) {
+    try {
+      const hash = await bcrypt.hash(password, config.token.saltingRounds);
+      return hash;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
+  model.addHook('beforeCreate', async (user, options) => {
+    let hash = await user.hashPassword(user.password);
+    user.hashed_password = hash;
   });
 
+  model.addHook('beforeUpdate', async (user, options) => {
+    if(user._changed.password) {
+      let hash = await user.hashPassword(user.password);
+      user.hashed_password = hash;
+    }
+  });
 
   return model;
 }
