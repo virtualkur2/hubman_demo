@@ -55,7 +55,6 @@ const requireSignIn = (req, res, next) => {
       });
     }
     req.auth = decoded;
-    console.log(decoded);
     next();
   });
 }
