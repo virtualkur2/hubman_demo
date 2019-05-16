@@ -45,7 +45,17 @@ const read = (req, res, next) => {
 }
 
 const update = (req, res, next) => {
-  
+  let user = Object.assign(req.profile, req.body);
+  user.save()
+    .then((result) => {
+      return res.status(200).json(result);
+    })
+    .catch((err) => {
+      console.error(err.message);
+      return res.status(400).json({
+        error: err.message
+      });
+    });
 }
 
 const userById = (req, res, next, id) => {
@@ -66,4 +76,5 @@ const userById = (req, res, next, id) => {
     });
 }
 
-module.exports = { create, read, userById }
+
+module.exports = { create, read, update, userById }
