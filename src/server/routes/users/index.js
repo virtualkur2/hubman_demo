@@ -13,7 +13,7 @@ const users = (router) => {
 
   router.route('/api/users/:userId')
     .get(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.read)
-  //   .put(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.update)
+    .put(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.update)
   //   .delete(authCtrl.requireSignIn, authCtrl.hasAuthorization, usrCtrl.remove);
   //
   router.param('userId', usrCtrl.userById);
