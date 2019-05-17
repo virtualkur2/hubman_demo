@@ -65,13 +65,9 @@ const User = (sequelize, DataTypes) => {
     }
   }
 
-  model.addHook('beforeCreate', async (user, options) => {
-    let hash = await user.hashPassword(user.password);
-    user.hashed_password = hash;
-  });
-
-  model.addHook('beforeUpdate', async (user, options) => {
-    if(user._changed.password) {
+  model.addHook('beforeSave', async (user, options) => {
+    if(user._options.isNewRecord || user._changed.password) {
+      console.log('Do it');
       let hash = await user.hashPassword(user.password);
       user.hashed_password = hash;
     }
