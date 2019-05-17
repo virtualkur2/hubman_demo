@@ -58,6 +58,23 @@ const update = (req, res, next) => {
     });
 }
 
+const remove = (req, res, next) => {
+  let user = req.profile;
+  user.destroy()
+    .then((result) => {
+      console.log(result);
+      return res.status(200).json({
+        result: result
+      });
+    })
+    .catch((err) => {
+      console.error(err.message);
+      return res.status(400).json({
+        error: err.message
+      })
+    });
+}
+
 const userById = (req, res, next, id) => {
   User.findByPk(id)
     .then((user) => {
@@ -77,4 +94,4 @@ const userById = (req, res, next, id) => {
 }
 
 
-module.exports = { create, read, update, userById }
+module.exports = { create, read, update, remove, userById }
